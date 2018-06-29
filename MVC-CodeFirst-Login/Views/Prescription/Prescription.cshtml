@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MVC_CodeFirst_Login.Models.Prescription>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Voorschrift";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Voorschrift</h2>
+        @if (Context.Session.GetString("UserId") != null)
+        {
+            @if (Model.Any())
+            {
+                <table class="table">
+                    <tr>
+                        <th>Medicijn naam</th>
+                        <th>Aantal</th>
+                        <th>Patient naam</th>
+                        <th>User naam</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.medication.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.patient.FirstName</td>
+                            <td>@item.generalPractioner.FirstName</td>
+
+                        </tr>
+                    }
+                </table>
+            }
+
+            <p>Je hebt nog geen voorschriften geschreven.</p>
+            <p>
+                <a asp-action="Create">Maak voorschrift</a>
+            </p>
+        }
+        else
+        {
+            <p>Er zijn geen voorschriften voor jou.</p>
+        }
+    </div>
+
+
+</div>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<MVC_CodeFirst_Login.Models.Patient>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="row">
+    @if (Context.Session.GetString("UserId") != null)
+    {
+        <div class="col-md-12">
+            <h2>Patienten</h2>
+            @if (Model.Any())
+            {
+                <table class="table">
+                    <tr>
+                        <th>Code</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Email</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.PatientId</td>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.Email</td>
+                        </tr>
+                    }
+                </table>
+            }
+
+            else
+            {
+                <p>Er zijn geen patienten.</p>
+            }
+        </div>
+
+        <p>
+            <a class="btn btn-success" role="button" asp-area="" asp-controller="Home" asp-action="GPRegister">Registreer Huisarts</a>
+            <a class="btn btn-success" role="button" asp-area="" asp-controller="Home" asp-action="PaRegister">Registreer Patient</a>
+        </p>
+    }
+</div>
+
+
+
+

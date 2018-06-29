@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MVC_CodeFirst_Login.Models.Diagnosis>
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Diagnosis";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Diagnoses</h2>
+        @if (Model.Any(e => e.UserId == Convert.ToInt32(Context.Session.GetString("UserId"))) || 
+            Model.Any(e => e.PatientId == Convert.ToInt32(Context.Session.GetString("PatientId"))))
+        {
+            <table class="table">
+                <tr>
+                    <th>Code</th>
+                    <th>Naam</th>
+                    <th>Begin datum</th>
+                    <th>Patient naam</th>
+                    <th>Huisarts naam</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.DiagnosisId</td>
+                        <td>@item.Name</td>
+                        <td>@item.BeginDate</td>
+                        <td>@item.patient.FirstName</td>
+                        <td>@item.generalPractioner.FirstName</td>
+                        <td><a asp-controller="Consult" asp-action="Create" asp-route-id="@item.DiagnosisId">Maak consult aan</a></td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>Er zijn geen diagnoses voor jou.</p>
+        }
+    </div>
+
+    <p>
+        <a asp-action="Create">Maak diagnose</a>
+    </p>
+</div>
